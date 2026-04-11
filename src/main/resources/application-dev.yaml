@@ -11,4 +11,7 @@ spring:
     hibernate:
       ddl-auto: update
 
+server:
+  port: 9090
+
 websiteurl: http://localhost:4242
