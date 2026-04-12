@@ -1,7 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
 
   jpa:
     hibernate:
@@ -11,3 +12,5 @@ spring:
 server:
   port: ${PORT:8080}
   address: 0.0.0.0
+
+websiteUrl: https://mystore.com
