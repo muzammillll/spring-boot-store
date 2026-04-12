@@ -4,11 +4,17 @@ spring:
 
   jwt:
     secret: ${JWT_SECRET}
-    accessTokenExpiration: 7200 #2h
-    refreshTokenExpiration: 604800 #7d
+    accessTokenExpiration: 7200
+    refreshTokenExpiration: 604800
 
   profiles:
     active: dev
+
+  datasource:
+    url: jdbc:mysql://junction.proxy.rlwy.net:51423/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: Dragon5*
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 razorpay:
   key:
