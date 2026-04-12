@@ -1,0 +1,68 @@
+package com.codewithme.store.mappers;
+
+import com.codewithme.store.dtos.ProductDto;
+import com.codewithme.store.entities.Category;
+import com.codewithme.store.entities.Product;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2026-04-12T21:44:36+0530",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 23 (Oracle Corporation)"
+)
+@Component
+public class ProductMapperImpl implements ProductMapper {
+
+    @Override
+    public ProductDto toDto(Product product) {
+        if ( product == null ) {
+            return null;
+        }
+
+        ProductDto productDto = new ProductDto();
+
+        productDto.setCategoryId( productCategoryId( product ) );
+        productDto.setId( product.getId() );
+        productDto.setName( product.getName() );
+        productDto.setPrice( product.getPrice() );
+        productDto.setDescription( product.getDescription() );
+
+        return productDto;
+    }
+
+    @Override
+    public Product toEntity(ProductDto productDto) {
+        if ( productDto == null ) {
+            return null;
+        }
+
+        Product.ProductBuilder product = Product.builder();
+
+        product.id( productDto.getId() );
+        product.name( productDto.getName() );
+        product.description( productDto.getDescription() );
+        product.price( productDto.getPrice() );
+
+        return product.build();
+    }
+
+    @Override
+    public void update(ProductDto productDto, Product product) {
+        if ( productDto == null ) {
+            return;
+        }
+
+        product.setName( productDto.getName() );
+        product.setDescription( productDto.getDescription() );
+        product.setPrice( productDto.getPrice() );
+    }
+
+    private Byte productCategoryId(Product product) {
+        Category category = product.getCategory();
+        if ( category == null ) {
+            return null;
+        }
+        return category.getId();
+    }
+}

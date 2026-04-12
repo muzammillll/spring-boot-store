@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<h2>Checkout Page</h2>
+<button onclick="pay()">Proceed to Pay</button>
+
+<script>
+    async function pay() {
+
+      const response = await fetch("https://store-api-production-7a6b.up.railway.app/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiZW1haWwiOiJhc2FkQGdtYWlsLmNvbSIsIm5hbWUiOiJhc2FkIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzU4MjI2MTUsImV4cCI6MTc3NTgyOTgxNX0.fCrVgSVkUcDRcjQsKWhPFrnTuWaU1CisToeKjwxALuuyGtek9fSPjy4CN5y8jazyVXPIcyRdhvc8QkRZQuz3ZQ"
+        },
+        body: JSON.stringify({
+          cartId: "b048f174-beef-4aed-8af0-90f1d6e4c433"
+        })
+      });
+
+      const data = await response.json();
+
+      const options = {
+        key: "rzp_test_SXxEp4B3zkxsPk",
+        order_id: data.razorpayOrderId,
+        name: "Om Store",
+        description: "Order Payment",
+
+        handler: async function (response) {
+
+          const verifyResponse = await fetch("https://store-api-production-7a6b.up.railway.app/payment/verify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          });
+
+          const result = await verifyResponse.text();
+          alert(result);
+        },
+
+        modal: {
+          ondismiss: function () {
+            alert("Payment Cancelled");
+          }
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+</script>
+
+</body>
+</html>
