@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://junction.proxy.rlwy.net:51423/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/store_api
     username: root
     password: Dragon5*
 
@@ -11,5 +11,3 @@ spring:
 
 server:
   port: 9091
-
-websiteurl: https://spring-boot-store-production-3cfd.up.railway.app

@@ -10,11 +10,7 @@ spring:
   profiles:
     active: dev
 
-  datasource:
-    url: jdbc:mysql://junction.proxy.rlwy.net:51423/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: root
-    password: Dragon5*
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 razorpay:
   key:
