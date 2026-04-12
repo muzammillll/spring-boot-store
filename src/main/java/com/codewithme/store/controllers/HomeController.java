@@ -1,17 +1,13 @@
 package com.codewithme.store.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class HomeController {
 
-    @RequestMapping("/")
-    public String index(Model model)
-    {
-        model.addAttribute("name","muzammil");
-        return "index";
+    @GetMapping("/")
+    public String home() {
+        return "Store API is running 🚀";
     }
-
 }

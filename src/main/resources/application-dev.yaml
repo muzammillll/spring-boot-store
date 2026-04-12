@@ -12,6 +12,6 @@ spring:
       ddl-auto: update
 
 server:
-  port: 9090
+  port: 9091
 
 websiteurl: http://localhost:4242
