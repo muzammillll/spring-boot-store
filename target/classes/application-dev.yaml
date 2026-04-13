@@ -9,5 +9,8 @@ spring:
     hibernate:
       ddl-auto: update
 
+  flyway:
+    enabled: false   # ✅ ADD THIS LINE
+
 server:
   port: 9091
