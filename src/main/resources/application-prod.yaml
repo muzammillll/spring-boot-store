@@ -3,11 +3,15 @@ spring:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver   # ✅ IMPORTANT
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+
+  flyway:
+    enabled: false   # ✅ VERY IMPORTANT
 
 server:
   port: ${PORT:8080}
