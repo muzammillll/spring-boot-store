@@ -57,14 +57,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(c ->
                                 c.requestMatchers("/").permitAll()
-                        .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                         .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/carts/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/users").permitAll()
-                                        .requestMatchers(HttpMethod.POST,"/products/**").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.PUT,"/products/**").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.DELETE,"/products/**").hasRole(Role.ADMIN.name())
+                                        .requestMatchers(HttpMethod.POST,"/products/**").hasRole("ADMIN")
+                                        .requestMatchers(HttpMethod.PUT,"/products/**").hasRole("ADMIN")
+                                        .requestMatchers(HttpMethod.DELETE,"/products/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                                 //.requestMatchers(HttpMethod.POST,"/auth/validate").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/auth/refresh").permitAll()
@@ -80,7 +80,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
 
-       // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+       .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(c -> {
                     c.authenticationEntryPoint(
                             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
