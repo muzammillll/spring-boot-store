@@ -80,7 +80,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
 
-        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+       // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(c -> {
                     c.authenticationEntryPoint(
                             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
