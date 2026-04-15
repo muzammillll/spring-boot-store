@@ -23,8 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
 
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
@@ -35,43 +33,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 path.endsWith(".js") ||
                 path.endsWith(".css") ||
                 path.startsWith("/auth") ||
-                path.startsWith("/carts")) {
+                path.startsWith("/carts") ||
+                path.startsWith("/products") ) {
 
             filterChain.doFilter(request, response);
             return;
         }
 
-        String authHeader =  request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
 
-       if (authHeader == null || !authHeader.startsWith("Bearer "))
-       {
-           filterChain.doFilter(request,response);
-           return;
-       }
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-       var token = authHeader.replace("Bearer ", "");
-      var jwt =  jwtService.parseToken(token);
+        try {
+            String token = authHeader.replace("Bearer ", "");
 
-       if (jwt==null || jwt.isExpired())
-       {
-           filterChain.doFilter(request,response);
-           return;
-       }
+            var jwt = jwtService.parseToken(token);
 
-        var authentication = new UsernamePasswordAuthenticationToken(
-                jwt.getUserId(),
-          null,
-               List.of(new SimpleGrantedAuthority("ROLE_"+ jwt.getRole()))
+            if (jwt != null && !jwt.isExpired()) {
 
-       );
-       authentication.setDetails(
-               new WebAuthenticationDetailsSource().buildDetails(request)
-       );
+                var authentication = new UsernamePasswordAuthenticationToken(
+                        jwt.getUserId(),
+                        null,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + jwt.getRole()))
+                );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
 
-        filterChain.doFilter(request,response);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
 
+        } catch (Exception e) {
+            System.out.println("JWT Error: " + e.getMessage());
+        }
+        filterChain.doFilter(request, response);
     }
 }
