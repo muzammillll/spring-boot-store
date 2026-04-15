@@ -2,15 +2,13 @@ spring:
   application:
     name: store
 
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
   jwt:
     secret: ${JWT_SECRET}
     accessTokenExpiration: 7200
     refreshTokenExpiration: 604800
-
-  profiles:
-    active: dev
-
-
 
 razorpay:
   key:
